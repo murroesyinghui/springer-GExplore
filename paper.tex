@@ -6,6 +6,7 @@
 
 
 % RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[graybox, natbib, nosecnum, twocolumn]{svmult}
 \bibpunct{(}{)}{;}{a}{}{,} % suppress commas between author-names and year
 
@@ -27,6 +28,7 @@
 \usepackage{hyperref}  %for hyperlinks
 \usepackage{soul}   % for high-lighting of text
 \usepackage{xspace}
+\usepackage{enumitem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,17 +44,20 @@
 \newcommand{\MST}{\kw{MST}}
 \newcommand{\kws}{\kw{KWS}}
 \newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\dnote}[1]{{\color{red}#1}}
+
 
 \begin{document}
 
 \title*{Graph Exploration and Search}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\author{Yinghui Wu}
+\author{Yinghui Wu\\Davide Mottin}
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 \institute{Yinghui Wu, Washington State University, \email{yinghui@eecs.wsu.edu}}
 %
+\institute{Hasso Plattner Institute, \email{davide.mottin@hpi.de}}
 % Use the package "url.sty" to avoid
 % problems with special characters
 % used in your e-mail or web address
@@ -64,11 +69,31 @@
 
 \section{Definition}
 
+Exploratory methods have been originally introduced as a mean to extract knowledge from relational data without knowing what to search~\cite{idreos2015overview}. 
+Recently, \emph{graph exploration} has been introduced to perform exploratory analyses on graph-shaped data~\cite{mottin2017graph}. 
+Graph exploration aims at mitigating the access to the data to the user, even if such user is a novice. 
 
+Algorithms for graph exploration entail that the user is not able to completely specify the object of interest with  a structure query, such as SPARQL~\cite{prud2006sparql}, but rather expresses the need with simple, more ambiguous languages.
+
+This asymmetry between the rigidity of the structured queries and the ambiguity of the user has inspired the study of approximate, flexible, and example-based methods. 
 
 
 %Main Text
+%%% Explain the main techniques
 \section{Overview}
+
+The research on graph exploration has revolved around three main pillars: \emph{keyword graph queries}, \emph{exploratory graph analysis}, and \emph{refinement of query results} 
+
+% We abstracted user-driven graph exploration properties from techniques proposed in the literature and defined such a unified taxonomy. 
+
+
+\stitle{Keyword Graph Queries} \dnote{DAVIDE: To add} 
+
+\stitle{Exploratory Graph Analysis} entails the process of casting an incomplete or imperfect pattern query to let the system find the closest match. Such exploratory analysis may return a huge number of results, e.g., structures matching the pattern. Thus, the system is required to provide intelligent support. One such strategy is the well known query-by-example paradigm, in which the user provides the template for the tuples and let the system infer the others. 
+
+\stitle{Refinement of Graph Query Results} is needed to deal with the overwhelming amount of results that is typical in subgraph processing. It includes approaches designed to present comprehensive result sets to the user or intermediate results that can be refined further. Instantiations of this kind are graph summaries, top-k methods, query reformulation, and skyline queries. 
+	% \item [Focused Graph Mining] guides the users to a specific portion of the graph they are interested in. It requires the user to provide feedback in the process to restrict the computation to some portion of the graph. Ego-networks mining belongs to this strategy, since the user search is limited to a particular area of the graph and the algorithms focus on that specific area. 
+
 
 \section{Key Research Findings}
 
@@ -167,7 +192,7 @@ without match in $Q$.
 
  
 
-\subsection{Exploratory methods (Davide)} 
+\input{exploratory}
 
 \section{Key Applications}
 
@@ -181,162 +206,162 @@ without match in $Q$.
 
 
 
-\eat{
-\subsection{Equations}
-\label{subsec:1}
-Use the standard \verb|equation| environment to typeset your equations, e.g.
-%
-\begin{equation}
-a \times b = c\;,
-\end{equation}
-%
-however, for multiline equations we recommend to use the \verb|eqnarray| environment.
-\begin{eqnarray}
-a \times b = c \nonumber\\
-\vec{a} \cdot \vec{b}=\vec{c}
-\label{eq:01}
-\end{eqnarray}
+% \eat{
+% \subsection{Equations}
+% \label{subsec:1}
+% Use the standard \verb|equation| environment to typeset your equations, e.g.
+% %
+% \begin{equation}
+% a \times b = c\;,
+% \end{equation}
+% %
+% however, for multiline equations we recommend to use the \verb|eqnarray| environment.
+% \begin{eqnarray}
+% a \times b = c \nonumber\\
+% \vec{a} \cdot \vec{b}=\vec{c}
+% \label{eq:01}
+% \end{eqnarray}
 
-\subsection{Subsection Heading}
-\begin{quotation}
-Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
-\end{quotation}
+% \subsection{Subsection Heading}
+% \begin{quotation}
+% Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
+% \end{quotation}
 
-\section{Lists}
-For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
+% \section{Lists}
+% For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
 
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
+% \begin{enumerate}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \begin{enumerate}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \end{enumerate}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \end{enumerate}
 
-\paragraph{Paragraph Heading} %
-For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
+% \paragraph{Paragraph Heading} %
+% For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
 
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
+% \begin{itemize}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
+% \begin{itemize}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \end{itemize}
+% \item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+% \end{itemize}
 
-\section{Tables}
-All tables should have accompanying legends, and corresponding in-text citations need to be provided. A table legend should begin with "Table" (not abbreviated), followed by the number, both in boldface.
-The number is not followed by a period, and the legend has no end-punctuation: Table \ref{tab:1}.
-%
-\begin{table*}
-\caption{Please write your table caption here}
-\label{tab:1}       % Give a unique label
-%
-% Follow this input for your own table layout
-%
-\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
-\hline\noalign{\smallskip}
-Classes & Subclass & Length & Action Mechanism  \\
-\noalign{\smallskip}\svhline\noalign{\smallskip}
-Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
-Translation & mRNA cleavage & 21 & mRNA cleavage\\
-Translation & mRNA  & 21--22 & mRNA cleavage\\
-Translation & mRNA  & 24--26 & Histone and DNA Modification\\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-\end{tabular}
-$^a$ Table foot note (with superscript)
-\end{table*}
-%
-\section{Figures}
-Color figures can be submitted. The print and electronic publication of the encyclopedia will be in full color. Please submit figures and supplementary materials in their original program format. See also Fig.~\ref{fig:1}.\footnote{If you copy
-text passages, figures, or tables from other works, you must obtain
-\textit{permission} from the copyright holder (usually the original
-publisher). Please enclose the signed permission with the manucript. The
-sources must be acknowledged either in the
-captions, as footnotes or in a separate section of the book.}
+% \section{Tables}
+% All tables should have accompanying legends, and corresponding in-text citations need to be provided. A table legend should begin with "Table" (not abbreviated), followed by the number, both in boldface.
+% The number is not followed by a period, and the legend has no end-punctuation: Table \ref{tab:1}.
+% %
+% \begin{table*}
+% \caption{Please write your table caption here}
+% \label{tab:1}       % Give a unique label
+% %
+% % Follow this input for your own table layout
+% %
+% \begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+% \hline\noalign{\smallskip}
+% Classes & Subclass & Length & Action Mechanism  \\
+% \noalign{\smallskip}\svhline\noalign{\smallskip}
+% Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
+% Translation & mRNA cleavage & 21 & mRNA cleavage\\
+% Translation & mRNA  & 21--22 & mRNA cleavage\\
+% Translation & mRNA  & 24--26 & Histone and DNA Modification\\
+% \noalign{\smallskip}\hline\noalign{\smallskip}
+% \end{tabular}
+% $^a$ Table foot note (with superscript)
+% \end{table*}
+% %
+% \section{Figures}
+% Color figures can be submitted. The print and electronic publication of the encyclopedia will be in full color. Please submit figures and supplementary materials in their original program format. See also Fig.~\ref{fig:1}.\footnote{If you copy
+% text passages, figures, or tables from other works, you must obtain
+% \textit{permission} from the copyright holder (usually the original
+% publisher). Please enclose the signed permission with the manucript. The
+% sources must be acknowledged either in the
+% captions, as footnotes or in a separate section of the book.}
 
 
-% For figures use
-%
-\begin{figure}
-% Use the relevant command for your figure-insertion program
-% to insert the figure file.
-% For example, with the graphicx style use
-%\includegraphics[scale=.65]{figure}
-%
-% If no graphics program available, insert a blank space i.e. use
-%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
-%
-\caption{Sample figure.}
-\label{fig:1}       % Give a unique label
-\end{figure}
+% % For figures use
+% %
+% \begin{figure}
+% % Use the relevant command for your figure-insertion program
+% % to insert the figure file.
+% % For example, with the graphicx style use
+% %\includegraphics[scale=.65]{figure}
+% %
+% % If no graphics program available, insert a blank space i.e. use
+% %\picplace{5cm}{2cm} % Give the correct figure height and width in cm
+% %
+% \caption{Sample figure.}
+% \label{fig:1}       % Give a unique label
+% \end{figure}
 
-\section{Definitions}
-If you want to list definitions, we recommend to use the Springer-enhanced \verb|description| environment -- it will automatically render Springer's preferred layout.
+% \section{Definitions}
+% If you want to list definitions, we recommend to use the Springer-enhanced \verb|description| environment -- it will automatically render Springer's preferred layout.
 
-\begin{description}[Type 1]
-\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\item[Type 2]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\end{description}
+% \begin{description}[Type 1]
+% \item[Type 1]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+% \item[Type 2]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+% \end{description}
 
-\subsubsection{Theorems}
+% \subsubsection{Theorems}
 
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
-%
-% or
-%
-\begin{definition}
-Definition text goes here.
-\end{definition}
+% \begin{theorem}
+% Theorem text goes here.
+% \end{theorem}
+% %
+% % or
+% %
+% \begin{definition}
+% Definition text goes here.
+% \end{definition}
 
-\begin{proof}
-%\smartqed
-Proof text goes here.
-\qed
-\end{proof}
+% \begin{proof}
+% %\smartqed
+% Proof text goes here.
+% \qed
+% \end{proof}
 
-\paragraph{Paragraph Heading} %
-%
-% For built-in environments use
-%
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
-%
-\begin{definition}
-Definition text goes here.
-\end{definition}
-%
-\begin{proof}
-\smartqed
-Proof text goes here.
-\qed
-\end{proof}
-\section{Other Options}
-\runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your citations.
+% \paragraph{Paragraph Heading} %
+% %
+% % For built-in environments use
+% %
+% \begin{theorem}
+% Theorem text goes here.
+% \end{theorem}
+% %
+% \begin{definition}
+% Definition text goes here.
+% \end{definition}
+% %
+% \begin{proof}
+% \smartqed
+% Proof text goes here.
+% \qed
+% \end{proof}
+% \section{Other Options}
+% \runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your citations.
 
-\subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your citations.
+% \subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your citations.
 
-\section{Submission of your article} To submit, login at \url{http://meteor.springer.com} with the user/password you should have received from Springer. Please upload the source files required for compilation (.tex, figures, and .bbl if you use bibtex) as well as a {\bf .pdf file of the compiled document}.
+% \section{Submission of your article} To submit, login at \url{http://meteor.springer.com} with the user/password you should have received from Springer. Please upload the source files required for compilation (.tex, figures, and .bbl if you use bibtex) as well as a {\bf .pdf file of the compiled document}.
 
-\section{Cross-References}
-Please login to Meteor (\url{http://meteor.springer.com}) and download a current table of contents. Include a list of related entries from the encyclopedia in this cross-reference section that may be of further interest to your readers. 
-\section{Citations}
-Citations are in NameYear style using natbib citation commands like {\bf \textbackslash citep\{\}} and {\bf \textbackslash citet\{\}}. The basic \textbackslash cite command works identical to \textbackslash citet. \\
-Some examples of citations are given below:
+% \section{Cross-References}
+% Please login to Meteor (\url{http://meteor.springer.com}) and download a current table of contents. Include a list of related entries from the encyclopedia in this cross-reference section that may be of further interest to your readers. 
+% \section{Citations}
+% Citations are in NameYear style using natbib citation commands like {\bf \textbackslash citep\{\}} and {\bf \textbackslash citet\{\}}. The basic \textbackslash cite command works identical to \textbackslash citet. \\
+% Some examples of citations are given below:
 
-\begin{itemize}
-\item[-]{Journal article: \citep{Smith99}}
-\item[-]{Book chapter \citep{Aron01} }
-\item[-]{Book, authored: \citep{Brown01}  }
-\item[-]{Proceedings, with an editor:  \citep{Boisnard06}  }
-\item[-]{PhD Thesis: \citep{AlmenaraThesis10} } 
-\end{itemize}
-}
+% \begin{itemize}
+% \item[-]{Journal article: \citep{Smith99}}
+% \item[-]{Book chapter \citep{Aron01} }
+% \item[-]{Book, authored: \citep{Brown01}  }
+% \item[-]{Proceedings, with an editor:  \citep{Boisnard06}  }
+% \item[-]{PhD Thesis: \citep{AlmenaraThesis10} } 
+% \end{itemize}
+% }
 
 % For bibtex users:
 % For references use the `Springer Basic Style'. 
