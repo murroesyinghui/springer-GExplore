@@ -1,0 +1,354 @@
+%%%%%%%%%%%%%%%%%%%% author.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% template for Encyclopedia articles
+%
+%%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[graybox, natbib, nosecnum, twocolumn]{svmult}
+\bibpunct{(}{)}{;}{a}{}{,} % suppress commas between author-names and year
+
+% choose options for [] as required from the list
+% in the Reference Guide
+
+\usepackage{mathptmx}       % selects Times Roman as basic font
+\usepackage{helvet}         % selects Helvetica as sans-serif font
+\usepackage{courier}        % selects Courier as typewriter font
+\usepackage{type1cm}        % activate if the above 3 fonts are
+                            % not available on your system
+
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage[normalem]{ulem}	% for strike-through of text with \sout{}  
+\usepackage{hyperref}  %for hyperlinks
+\usepackage{soul}   % for high-lighting of text
+\usepackage{xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\eat}[1]{}
+\newcommand{\stitle}[1]{\vspace{1.6ex}\noindent{\bf #1}}
+\newcommand{\eetitle}[1]{\vspace{0.8ex}\noindent{\underline{\em #1}}}
+\newcommand{\etitle}[1]{\vspace{0.6ex}\noindent{{\em #1}}}
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\NP}{\kw{NP}}
+\newcommand{\dist}{\kw{dist}}
+\newcommand{\len}{\kw{len}}
+\newcommand{\kw}[1]{{\ensuremath {\mathsf{#1}}}}
+\newcommand{\MST}{\kw{MST}}
+\newcommand{\kws}{\kw{KWS}}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+
+\begin{document}
+
+\title*{Graph Exploration and Search}
+% Use \titlerunning{Short Title} for an abbreviated version of
+% your contribution title if the original one is too long
+\author{Yinghui Wu}
+% Use \authorrunning{Short Title} for an abbreviated version of
+% your contribution title if the original one is too long
+\institute{Yinghui Wu, Washington State University, \email{yinghui@eecs.wsu.edu}}
+%
+% Use the package "url.sty" to avoid
+% problems with special characters
+% used in your e-mail or web address
+%
+\maketitle
+
+%\section{Synonyms}
+%Provide synonyms to the article title.
+
+\section{Definition}
+
+
+
+
+%Main Text
+\section{Overview}
+
+\section{Key Research Findings}
+
+\subsection{Graph Search with Keywords (Yinghui)} 
+
+Keyword search (\kws) has been routinely used to 
+explore and understand graph data~\citep{wang2010survey,bao2015exploratory,yahya2016exploratory,mottin2017graph}. 
+(1) A keyword query $Q$ is a set of terms $\{t_1, ..., t_n\}$. 
+Given graph $G$=$(V, E)$ and a term $t_i$, a match function 
+determines a set of {\em content nodes} $V(t_i)\subseteq V$ that match $t_i$. 
+(2) An answer 
+$G_Q$ of a keyword query $Q$ is a subgraph of $G$ that contains at least 
+one node from $V(t_i)$ for each $t_i\in Q$. 
+In keyword-based graph exploration, 
+a function $F(G_Q)$ is used to quantify the 
+cost of connecting all content nodes in $G$. 
+Answers with smaller cost have higher quality. 
+
+Given a node pair $(u, v)$ 
+in graph $G$, (1) the distance from $u$ to $v$,
+denoted as $\dist(u,v)$, is the sum of edge weight 
+on the shortest path from $u$ to $v$; and  
+(2) $\len(u,v)$ denotes the length of 
+the shortest path from $u$ to $v$. 
+There are three common classes of \kws queries. 
+
+\vspace{.5ex}
+\etitle{Distinct root-based KWS}~\citep{kacholia2005bidirectional,he2007blinks}. 
+These query defines $G_Q$ as a minimal rooted tree 
+which (1) contains a distinct root node $v_r$, and 
+at least a content node $v_i\in V(t_i)$ as a leaf for each $t_i\in Q$; 
+and (2) $\len(v_r, v_i)\leq r$ for a predefined hop bound $r$, 
+for each leaf $v_i$.  Here, $G_Q$ is minimal if 
+no subtree of $G_Q$ is an answer of $Q$ in $G$. 
+The function $F(G_Q)$ is defined as 
+$F(G_Q) = \sum_{t_i\in Q}\dist(v_r, v_i)$, 
+where $v_i$ ranges over the content nodes. 
+
+The answers of such queries can be found in  
+$O(|Q|(|V|\log|V|+|E|))$ time (cf.~\citep{yu2010keyword}). 
+
+\etitle{Steiner tree-based KWS}~\citep{bhalotia2002keyword}. 
+A Steiner tree-based query differs 
+from its distinct root-based counterparts 
+in that it uses a different cost function $F(G_Q)$, which is defined as 
+$\sum_{e\in G_Q} w(e)$, 
+\ie the total weight of the edges in the Steiner tree $G_Q$. 
+
+%%%%%%%%%
+It is \NP-hard~\citep{yu2010keyword} to evaluate a Steiner tree-based query  
+by computing a minimum weighted Steiner tree (\MST, a known \NP-hard problem~\citep{ding2007finding}). 
+Both exact~\citep{ding2007finding} and 
+approximation algorithms~\citep{byrka2013steiner} 
+have been developed to evaluate such queries. 
+
+\vspace{.5ex}
+\etitle{Steiner graph-based KWS}~\citep{li2008ease,kargar2011keyword}. 
+Finding $G_Q$ as graphs rather than trees may be more helpful. For Steiner graph-based queries with a number $r$,  
+$G_Q$ is a Steiner graph that contains content and Steiner nodes (\ie nodes 
+on shortest paths between two content nodes), with either radius bounded by $r$ 
+(\ie r-radius Steiner graph~\citep{li2008ease}), or distance between 
+any two content nodes bounded by $r$ (\ie $r$-clique~\citep{kargar2011keyword}). 
+For an answer $G_Q$ with nodes $\{v_1, \ldots, v_n\}$,  its cost $F(G_Q)$ 
+is computed as  
+$\sum_{i\in[1, n]}\sum_{j\in[i+1,n]}\dist(v_i, v_j)$, 
+\ie the total pairwise distances of the 
+content nodes in $G_Q$. 
+Here, the distances are typically 
+induced by undirected shortest paths.  
+
+It is in general \NP-hard 
+to evaluate Steiner graph-based queries~\citep{yu2010keyword, kargar2011keyword}. 
+Approximate algorithms are developed for such queries to 
+find $r$-radius graphs~\citep{li2008ease}
+and $r$-cliques~\citep{kargar2011keyword}. 
+
+\stitle{Keyword query suggestion}. 
+Keyword query suggestion and its variants 
+(\eg query refinement~\cite{mishra2009interactive} and reformulation~\citep{yao2012keyword}) 
+have been studied to suggest new queries that better describe search intent 
+for graph exploration. 
+Most prior work adopts information retrieval techniques that make use of 
+query logs and user feedback~\citep{carpineto2012survey,cao2008context}.
+Keyword query suggestion for graphs has been studied in ~\citep{tran2009top} by suggesting structured queries computed from the keywords over RDF data. In order to summarize the results of \kws over structured data, tag clouds~\citep{koutrika2009data} discovers the most significant words retrieved as a part of the initial results. 
+Provable quality guarantees of the answers are not addressed in these work. 
+
+Query suggestion has been studied 
+for XML data~\citep{zeng2014breaking}, 
+with a focus on coping with missed matches. An approximate 
+answer of original query $Q$ is computed by expanding 
+its answer with content nodes of the same type, and 
+new keywords are suggested to replace those 
+without match in $Q$. 
+
+%\subsection{Graph Search with Schemaless Queries (Yinghui)} 
+
+ 
+
+\subsection{Exploratory methods (Davide)} 
+
+\section{Key Applications}
+
+\section{Future Directions} 
+
+
+
+%This document is intended as a template and guide for the preparation of articles to an encyclopedia, using latex. Contributions should in general follow the usual scheme, "Synonyms, Definitions, Main text (split into various sections with heads and subheads chosen by authors), Conclusions, Cross-references and References", although circumstances might indicate a deviation from this. 
+%{\bf Footnotes should not be used}!
+
+
+
+
+\eat{
+\subsection{Equations}
+\label{subsec:1}
+Use the standard \verb|equation| environment to typeset your equations, e.g.
+%
+\begin{equation}
+a \times b = c\;,
+\end{equation}
+%
+however, for multiline equations we recommend to use the \verb|eqnarray| environment.
+\begin{eqnarray}
+a \times b = c \nonumber\\
+\vec{a} \cdot \vec{b}=\vec{c}
+\label{eq:01}
+\end{eqnarray}
+
+\subsection{Subsection Heading}
+\begin{quotation}
+Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
+\end{quotation}
+
+\section{Lists}
+For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
+
+\begin{enumerate}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\begin{enumerate}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\end{enumerate}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\end{enumerate}
+
+\paragraph{Paragraph Heading} %
+For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
+
+\begin{itemize}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
+\begin{itemize}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\end{itemize}
+\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+\end{itemize}
+
+\section{Tables}
+All tables should have accompanying legends, and corresponding in-text citations need to be provided. A table legend should begin with "Table" (not abbreviated), followed by the number, both in boldface.
+The number is not followed by a period, and the legend has no end-punctuation: Table \ref{tab:1}.
+%
+\begin{table*}
+\caption{Please write your table caption here}
+\label{tab:1}       % Give a unique label
+%
+% Follow this input for your own table layout
+%
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Classes & Subclass & Length & Action Mechanism  \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
+Translation & mRNA cleavage & 21 & mRNA cleavage\\
+Translation & mRNA  & 21--22 & mRNA cleavage\\
+Translation & mRNA  & 24--26 & Histone and DNA Modification\\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+$^a$ Table foot note (with superscript)
+\end{table*}
+%
+\section{Figures}
+Color figures can be submitted. The print and electronic publication of the encyclopedia will be in full color. Please submit figures and supplementary materials in their original program format. See also Fig.~\ref{fig:1}.\footnote{If you copy
+text passages, figures, or tables from other works, you must obtain
+\textit{permission} from the copyright holder (usually the original
+publisher). Please enclose the signed permission with the manucript. The
+sources must be acknowledged either in the
+captions, as footnotes or in a separate section of the book.}
+
+
+% For figures use
+%
+\begin{figure}
+% Use the relevant command for your figure-insertion program
+% to insert the figure file.
+% For example, with the graphicx style use
+%\includegraphics[scale=.65]{figure}
+%
+% If no graphics program available, insert a blank space i.e. use
+%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
+%
+\caption{Sample figure.}
+\label{fig:1}       % Give a unique label
+\end{figure}
+
+\section{Definitions}
+If you want to list definitions, we recommend to use the Springer-enhanced \verb|description| environment -- it will automatically render Springer's preferred layout.
+
+\begin{description}[Type 1]
+\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+\item[Type 2]{That addresses central themes pertainng to migration, health, and disease. Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+\end{description}
+
+\subsubsection{Theorems}
+
+\begin{theorem}
+Theorem text goes here.
+\end{theorem}
+%
+% or
+%
+\begin{definition}
+Definition text goes here.
+\end{definition}
+
+\begin{proof}
+%\smartqed
+Proof text goes here.
+\qed
+\end{proof}
+
+\paragraph{Paragraph Heading} %
+%
+% For built-in environments use
+%
+\begin{theorem}
+Theorem text goes here.
+\end{theorem}
+%
+\begin{definition}
+Definition text goes here.
+\end{definition}
+%
+\begin{proof}
+\smartqed
+Proof text goes here.
+\qed
+\end{proof}
+\section{Other Options}
+\runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your citations.
+
+\subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your citations.
+
+\section{Submission of your article} To submit, login at \url{http://meteor.springer.com} with the user/password you should have received from Springer. Please upload the source files required for compilation (.tex, figures, and .bbl if you use bibtex) as well as a {\bf .pdf file of the compiled document}.
+
+\section{Cross-References}
+Please login to Meteor (\url{http://meteor.springer.com}) and download a current table of contents. Include a list of related entries from the encyclopedia in this cross-reference section that may be of further interest to your readers. 
+\section{Citations}
+Citations are in NameYear style using natbib citation commands like {\bf \textbackslash citep\{\}} and {\bf \textbackslash citet\{\}}. The basic \textbackslash cite command works identical to \textbackslash citet. \\
+Some examples of citations are given below:
+
+\begin{itemize}
+\item[-]{Journal article: \citep{Smith99}}
+\item[-]{Book chapter \citep{Aron01} }
+\item[-]{Book, authored: \citep{Brown01}  }
+\item[-]{Proceedings, with an editor:  \citep{Boisnard06}  }
+\item[-]{PhD Thesis: \citep{AlmenaraThesis10} } 
+\end{itemize}
+}
+
+% For bibtex users:
+% For references use the `Springer Basic Style'. 
+\bibliographystyle{spbasic}  %for bibtex
+\bibliography{paper} %for bibtex-example
+
+%For non-Bibtex users:
+%\begin{thebibliography}{99}
+%\bibitem[Aron 2001]{Aron01} Aron J, Blass B (2001) The future of modern genomics. Blackwell, London
+%\bibitem[Brown 2001]{Brown01} Brown B, Aaron M (2001) The politics of nature. In: Smith J (ed) The rise of modern genomics, 3rd edn. Wiley, New York, p 234 -295 
+%\bibitem[Smith 1999] {Smith99} Smith J, Jones M Jr, Houghton L et al (1999) Future of health insurance. N Engl J Med 965:325 -329  
+%\bibitem[South 1999]{South99} South M (1999) The future of genomics. In: Williams H (ed) Proceedings of the genomic researchers, Boston, 1999
+%\end{thebibliography}
+
+\end{document}
