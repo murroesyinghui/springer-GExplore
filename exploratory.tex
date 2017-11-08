@@ -1,0 +1,115 @@
+%!TEX root=./paper.tex
+\subsection{Graph Exploration Methods (Davide)} 
+
+
+
+
+
+
+% \begin{enumerate}[label={\Roman*.}]
+% 	\item \textbf{Introduction and motivation} (10 min)
+% 		\begin{itemize}%[label={\bf\arabic*.}]
+% 			\item Necessity of data exploration
+% 			\item Lack of graph exploration due to the complexity of graph data
+% 			\item Requirements for graph exploration
+% 			\item Application for graph exploration systems. %to recommending systems, graph databases, graph visualization. 
+% 		\end{itemize}
+% 	\item \textbf{Data Exploration Taxonomy} (20 min) 
+% 		\begin{enumerate}[label={\bf\arabic*.}]
+% 			\item \textbf{Exploratory Graph Analysis}: approximate queries and queries-by-example
+% 			\item \textbf{Refinement of Query Results}:\\ query reformulation and refinement, top-k results, skyline queries
+% 			\item \textbf{Focused Graph Mining}: personalized queries, focused queries, data clustering
+% 		%%% EXTENDED version with references if needed
+% 		% 	\item \textbf{Exploratory queries}
+% 		% 		\begin{itemize}
+% 		% 			\item Approximate queries~\cite{qarabaqi2016merlin}
+% 		% 			\item By example paradigm~\cite{zloof1975query,dimitriadou2014explore}
+% 		% 		\end{itemize}
+% 		% 	\item \textbf{Results presentation}
+% 		% 		\begin{itemize}
+% 		% 			\item Recommendation~\cite{drosou2013ymaldb,jiang2015snaptoquery}
+% 		% 			\item Reformulation and refinement~\cite{mottin2013probabilistic,basu2008minimum,mishra2009interactive,chapman2009not}
+% 		% 			\item Top-k results~\cite{arai2009anytime,chaudhuri1999evaluating,bruno2002top}
+% 		% 		\end{itemize}
+% 		% 	\item \textbf{Focused analytics}~\cite{stefanidis2010perk,arvanitis2012towards}
+% 		\end{enumerate}
+% 	\item \textbf{User-driven Graph Exploration} %(1h 40 min)
+% 		\begin{enumerate}[label={\bf\arabic*.},start=0]
+% 		\item \textbf{Background} (10 min)
+% 			\begin{itemize}
+% 				\item Graph models and terminology
+% 				\item (Sub)graph isomorphism, graph edit distance
+% 				\item Frequent subgraph mining
+% 				\item Graph clustering and community detection
+% 			\end{itemize}
+\dnote{DAVIDE: Just a placeholder for the content.}
+
+\stitle{Exploratory Graph Analysis} 
+			\begin{itemize}
+				\item Approximate search:
+					\begin{itemize}
+						\item Structural preserving: homomorphism~\cite{fan2010graph}, strong simulation~\cite{ma2014strong}
+						\item Incompletely specified patterns~\cite{yang2014slq,khan2013nema,yuan2012efficient}
+					\end{itemize}
+				\item By example paradigm:
+					\begin{itemize}
+						\item Graph query by example~\cite{mottin2014exemplar,jayaram2015querying}	
+						\item Learning paths~\cite{bonifati2014learning} 
+					\end{itemize}
+			\end{itemize}
+\stitle{Refinement of Graph Query Results}
+			\begin{itemize}
+				\item Reformulation and refinement:
+					\begin{itemize}
+						\item Graph Query Reformulation with diversity~\cite{mottin2015graph}
+						\item Why-empty and Why-so-many results~\cite{vasilyeva2016answering}
+						\item Result summarization~\cite{ranu2014answering,wu2013summarizing}
+					\end{itemize}
+				\item Top-k results: 
+					\begin{itemize}
+					 	\item Diversified Top-k Graph Pattern Matching~\cite{fan2013diversified}
+					 	\item Learning to rank from user-feedback~\cite{su2015exploiting}
+					 	\item Top-K interesting subgraph discovery in information networks~\cite{gupta2014top,jin2015querying}
+					 \end{itemize}
+				\item Skyline queries~\cite{zheng2014efficient,zou2010dynamic}  
+			\end{itemize}
+% 		\item \textbf{Focused Graph Mining} (35 min) 
+% 			\begin{itemize}
+% 				\item Focused Graph clustering and outlier detection:
+% 					\begin{itemize}
+% 						\item Focused clustering providing seed nodes~\cite{perozzi2014focused,iglesias2015efficient,kloumann2014community}
+% 						\item Query-driven outlier detection~\cite{gupta2014local,zhuang2014mining}
+% 					\end{itemize}
+% 				\item Space restriction methods: 
+% 					\begin{itemize}
+% 						\item Ego-networks~\cite{epasto2015ego} and local community detection~\cite{ruan2013efficient,staudt2014detecting}
+% 						\item Center-piece subgraphs~\cite{tong2006center}
+% 						\item Query-driven graph summarization~\cite{zhang2010discovery}
+% 					\end{itemize}
+% 				\item Reweighting graphs: WIGM~\cite{yang2012wigm}	
+% 			\end{itemize}
+% 	\end{enumerate}
+% 	\item \textbf{Real-world use case} (15 min) 
+% 		\begin{itemize}
+% 			\item Linked Data graphs: exploration, query refinement, and mining
+% 		\end{itemize}
+% 	\item \textbf{Open challenges} (20 min) 
+% 		\begin{itemize}%[label={\bf\arabic*.}]
+% 			% \item \textbf{Applications} {\small [to be excluded in a 1.5 hours tutorial]}
+% 			% 	\begin{itemize}
+% 			% 		\item Better recommendations for targeted advertising 
+% 			% 		\item Improved graph exploration tools
+% 			% 		\item Supporting mobile devices (limited screen space)
+% 			% 		\item Adaptive techniques for improved performance
+% 			% 	\end{itemize}
+% 			%\item \textbf{Open questions}
+% 			%	\begin{itemize}
+% 			\item Can we \emph{interactively} assist the user toward the retrieval of the correct answer?  
+% 			\item Can we provide \emph{explanations} for the query results? 
+% 			\item Is there a way to efficiently \emph{adapt} the analyses on-demand? 
+% 			\item Can we integrate these techniques into current \emph{graph databases}?
+% 			%	\end{itemize}
+% 		\end{itemize}
+
+
+
