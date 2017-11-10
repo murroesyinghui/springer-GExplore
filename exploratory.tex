@@ -1,130 +1,143 @@
 %!TEX root=./paper.tex
 \subsection{Exploratory Graph Analysis (Davide)} 
 
-\stitle{Example-based approaches.} 
+\stitle{Example-based approaches} 
+
 One of the earliest attempts to bring examples as a query method is query-by-example~\citep{zloof1975query}.
 The main idea was to help the user in the query formulation, allowing her to specify the shape of the results in terms of templates for tuples, i.e., examples.
 Query-by-example has been lately revisited, and the use of examples have found application in graph data as well. 
 The definition of example has transformed from a mere template to the representative of the intended results the user would like to have.
-\emph{Examples} for a graph $G = (V,E)$ can be either \emph{set of nodes} $Q \subseteq V$, \emph{tuple} of nodes $(v_1, ..., v_n) \in V^n$ or \emph{subgraphs} $Q \subseteq G$, where with an abuse of notation $\subseteq$ indicates both set and structural inclusion. 
+\emph{Examples} for a graph $G = (V,E)$ can be either \emph{set of nodes} $Q \subseteq V$, \emph{tuple} of nodes $(v_1, ..., v_n) \in V^n$, or \emph{subgraphs} $Q \subseteq G$, where with an abuse of notation $\subseteq$ indicates both set and structural inclusion. 
+
+\eetitle{Set of nodes as examples.} Several analyses can be performed when a set of examples nodes $Q\subseteq V$ is provided; this includes the discovery of dense graph regions~\citep{gionis2015bump,ruchansky2015minimum}, central nodes~\citep{tong2006center}, communities~\citep{staudt2014detecting,perozzi2014focused}.%, and targeted graph summarization~\citep{zhang2010discovery}. 
+Discrepancy maximization in graphs~\citep{gionis2015bump} aims at finding a connected subgraph $G' = (V', E'), G' \subseteq G$ that maximizes the discrepancy $\delta(G'){=}\alpha|Q|{-}|V{\setminus}Q|, \alpha > 1$; in other words, $G'$ is a subgraph containing more nodes from $Q$ than other nodes. 
+Discrepancy maximization is \NP-hard. 
+On a similar line, the Center-piece subgraph problem (CEPS)~\citep{tong2006center} finds maximum weight subgraph that contains at least $k$ query nodes, at most $b$ other nodes. 
+A generalization of the CEPS problem, the minimum Wiener connector problem (MWC)~\citep{ruchansky2015minimum} computes dense regions of a graph potentially representing community structures, given a set of nodes as input. MWC aims at finding a subgraph of $G$ induced by $Q$, denoted as $G[Q]$, that minimizes the sum of the pairwise distances among the nodes in $Q$, i.e, $\argmin_{G[Q]}\sum_{\{u,v\}{}\in{}Q}{}d_{G[Q]}(u,v)$. 
+
+Providing examples has also been used to detect communities~\citep{staudt2014detecting,perozzi2014focused}, where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
+One approach is to consider each node in $v \in Q$ as the only representative of a community~\citep{staudt2014detecting}. 
+In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the 
+Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns cluster that better represent the seed nodes $Q$.
+In addition, FocusCO also returns outlier nodes that do not belong to any community identified so far.  
+
+% Last, graph summarization can exploit the information on the example nodes to preserve only the relevant information in the nodes~\cite{zhang2010discovery}. 
+% \dnote{Learning queries by example~\citep{bonifati2014learning}}
 
 
-\dnote{Describe seed-based approaches}
+\eetitle{Node tuples as examples.}
+In Graph Query by Example (GQBE)~\citep{jayaram2015querying} a tuple of nodes $(v_1, ..., v_n), v_i \in V^n$ is a representative of the result tuples. 
+For instance, if the pair (\emph{Yahoo, Jerry Yang}) is provided, the result is expectedly other \emph{IT company, founder} pairs. 
+The solution first computers \emph{minimal answer graph} connecting the query nodes and then find other subgraph isomorphic to the answer graph. 
 
-\dnote{Describe Exemplar queries~\citep{mottin2014exemplar}, graph Query by example~\citep{jayaram2015querying}, and PANDA~\citep{xie2017panda}}
+\eetitle{Subgraphs as examples.}
+Subgraphs are more expressive than nodes and tuples, hence they can be exploited to obtain more accurate results. 
+In the case of graphs, the example can constitute an Exemplar Query~\citep{mottin2016exemplar}, thus $Q\subseteq G$ and a result is a subset of $G$ congruent to $Q$.
+Exemplar Queries is a flexible paradigm that allows the definition of multiple congruence relations among the input example and the intended results. 
+Moreover, it supports efficient retrieval of top-$k$ results. 
 
+A generalization of exemplar queries, PANDA~\citep{xie2017panda}, studies partial topology-based network search. 
+That is, to find the connections (paths) between structures node-label isomorphic to different user inputs. 
+PANDA first materialize all isomorphic graphs, then groups them into connected components, and finally finds undirected shortest paths among them. 
 
 %, where $\ell : V \cup E \to \mathcal{L}$ is a labelling function on a set of labels $\mathcal{L}$ 
 
+\dnote{DAVIDE: Maybe to expand a bit more.}
 
 
-% \begin{enumerate}[label={\Roman*.}]
-% 	\item \textbf{Introduction and motivation} (10 min)
-% 		\begin{itemize}%[label={\bf\arabic*.}]
-% 			\item Necessity of data exploration
-% 			\item Lack of graph exploration due to the complexity of graph data
-% 			\item Requirements for graph exploration
-% 			\item Application for graph exploration systems. %to recommending systems, graph databases, graph visualization. 
-% 		\end{itemize}
-% 	\item \textbf{Data Exploration Taxonomy} (20 min) 
-% 		\begin{enumerate}[label={\bf\arabic*.}]
-% 			\item \textbf{Exploratory Graph Analysis}: approximate queries and queries-by-example
-% 			\item \textbf{Refinement of Query Results}:\\ query reformulation and refinement, top-k results, skyline queries
-% 			\item \textbf{Focused Graph Mining}: personalized queries, focused queries, data clustering
-% 		%%% EXTENDED version with references if needed
-% 		% 	\item \textbf{Exploratory queries}
-% 		% 		\begin{itemize}
-% 		% 			\item Approximate queries~\cite{qarabaqi2016merlin}
-% 		% 			\item By example paradigm~\cite{zloof1975query,dimitriadou2014explore}
-% 		% 		\end{itemize}
-% 		% 	\item \textbf{Results presentation}
-% 		% 		\begin{itemize}
-% 		% 			\item Recommendation~\cite{drosou2013ymaldb,jiang2015snaptoquery}
-% 		% 			\item Reformulation and refinement~\cite{mottin2013probabilistic,basu2008minimum,mishra2009interactive,chapman2009not}
-% 		% 			\item Top-k results~\cite{arai2009anytime,chaudhuri1999evaluating,bruno2002top}
-% 		% 		\end{itemize}
-% 		% 	\item \textbf{Focused analytics}~\cite{stefanidis2010perk,arvanitis2012towards}
-% 		\end{enumerate}
-% 	\item \textbf{User-driven Graph Exploration} %(1h 40 min)
-% 		\begin{enumerate}[label={\bf\arabic*.},start=0]
-% 		\item \textbf{Background} (10 min)
+\stitle{Reformulation of Graph Queries}
+
+Graph exploration entails that a user provided query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
+For this reason query reformulation techniques that aim at modifying the query to lead the user to the intended result have been proposed~\citep{mottin2015graph,hurtado2008query}. 
+A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$, with $\ell$ being a labeling function on nodes and edges, is a query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. 
+Therefore, $Q'$ can be more specific or more generic than $Q$. 
+%For simplicity the graph is considered unlabeled, even though the presented methods work mostly with labeled graphs. 
+%the set of $\mathcal{R}(Q)=\{G' \subseteq G | G' \equiv Q \}$ with a
+
+Early attempts in this direction propose to enrich the SPARQL semantics with a \textsc{RELAX} clause that returns a set of reformulations following some predefined rules (such as expanding edges with a specific label)~\citep{hurtado2008query}.
+
+%Few works explicitly target large graphs
+
+
+% Given a set of graphs $\mathcal{D} = \{G_1, ..., G_n\} and a query $Q:\langle$$N_Q,E_Q$$\rangle$ the results of the evaluation of $Q$ over the set $\mathcal{D}$, is the set $\results{Q}$ of subgraphs isomorphic to $Q$.
+% In order to retrieve relevant reformulations, the objective function sums two different contributions: the number of $\results{Q}$ captured by the candidate reformulations (\emph{coverage}), and the number of diverse results in each result set of the reformulated queries (\emph{diversification}).
+% The coverage is a function $cov$ that takes as input a set of reformulated queries $R$, and computes the number of results captured by $R$, that is, $cov(R) = |\bigcup_{Q \in R}\results{Q}|$.
+% The diversification is represented by a function $div$ that takes into account the number of elements that are in the result set of $Q_1$ and not in $Q_2$, namely $div(Q_1, Q_2) = |\results{Q_1} \cup \results{Q_2}| - |\results{Q_1}\cap \results{Q_2}|$.
+% %The function measures the advantage that we have in taking results with a small overlap, in this way the higher div is the smaller the amount of common results.
+% The final score of a set of reformulated queries is the linear combination of coverage and diversity
+% \vspace*{-6pt}
+% \[f(R) = cov(R) + \lambda\sum_{Q_1,Q_2 \in R}div(Q_1,Q_2)\]
+% \vspace*{-6pt}
+
+% \noindent where $\lambda \in [0,1]$ is a parameter that regulates the diversification of the result set $R$.
+% The set $R$ that maximizes the two factors of $f(R)$ is selected.
+
+
+
+% \eetitle{Empty-Answer:}
+% An empty-answer can be avoided with a more flexible or approximate query, as previously described, or with query reformulation. 
+% Unfortunately, the problem has received little attention and few approaches have been proposed. 
+
+% Empty-answer in RDF data is generally solved with rule based approaches~\cite{hurtado2008query}. 
+% This means that an empty-answer query is modified according to ad-hoc rules that take into consideration taxonomic information on ontologies. 
+% This diminishes the generality of the method and constrains the algorithm to RDF data. 
+% Moreover, the query modifications are treated equally irrespective of any user preference. 
+% A preliminary study of empty-answer queries in graphs has been recently proposed~\cite{vasilyeva2016answering}. 
+% That method is based on the idea of differential graphs, i.e., the largest subgraph of the query that produces answers. 
+% Despite of the intuitive definition, the method suffers of efficiency problems and lacks any user preference model.
+
+
+% \eetitle{Many-Answers:}
+% Faceted search on graphs has mainly been considered for RDF graphs and SPARQL queries~\cite{oren2006extending,arenas2014faceted,wagner2011browsing,ferre2011semantic}. 
+% The purpose is to propose a set of facets that represents groups of more specific queries.
+% Tree-based approaches~\cite{wagner2011browsing} similar to decision trees have been proposed with the purpose of implicitly minimizing user effort. 
+% However, apart from an unclear objective, these methods explore a large search space and disregard any user preference. 
+% Faceted search has been also used as a tool for query suggestion for exploratory search~\cite{ferre2011semantic}.
+% In~\cite{arenas2014faceted} the SPARQL reformulations are extended to OWL logic, where the semantics of each reformulation is captured by the RDF taxonomy.
+% %Recall that a reformulation in graph terms is a supergraph or a modification of the query. 
+% However, SPARQL approaches are mostly rule-based, since they generate facets based on some predefined expansion rule or grammar and therefore not suitable for any heterogeneous graph.
+% Moreover, the efficiency of these methods highly depends on the underlying database and query optimizer, and although rule based approaches can be fast in principle they do not scale to large graphs. 
+
+
+% \eetitle{Missing-answers:}
+% The only known work that deals with missing answers proposes a why-not method for set of graphs~\cite{islam2015efficient}.
+% The approach is based on the maximum common subgraph that includes the results (i.e. the additional graphs) that the user would like to find. 
+% The main limitation is that they only consider set of graphs instead of heterogeneous networks and the method cannot easily apply to large graphs. 
+
+% \dnote{DAVIDE: Just a placeholder for the content.}
+
+
+
+
+% \stitle{Exploratory Graph Analysis} 
 % 			\begin{itemize}
-% 				\item Graph models and terminology
-% 				\item (Sub)graph isomorphism, graph edit distance
-% 				\item Frequent subgraph mining
-% 				\item Graph clustering and community detection
+% 				\item Approximate search:
+% 					% \begin{itemize}
+% 					% 	\item Structural preserving: homomorphism~\cite{fan2010graph}, strong simulation~\cite{ma2014strong}
+% 					% 	\item Incompletely specified patterns~\cite{yang2014slq,khan2013nema,yuan2012efficient}
+% 					% \end{itemize}
+% 				\item By example paradigm:
+% 					\begin{itemize}
+% 						\item Graph query by example~\cite{mottin2014exemplar,jayaram2015querying}	
+% 						\item Learning paths~\cite{bonifati2014learning} 
+% 					\end{itemize}
 % 			\end{itemize}
-\dnote{DAVIDE: Just a placeholder for the content.}
-
-
-
-
-\stitle{Exploratory Graph Analysis} 
-			\begin{itemize}
-				\item Approximate search:
-					\begin{itemize}
-						\item Structural preserving: homomorphism~\cite{fan2010graph}, strong simulation~\cite{ma2014strong}
-						\item Incompletely specified patterns~\cite{yang2014slq,khan2013nema,yuan2012efficient}
-					\end{itemize}
-				\item By example paradigm:
-					\begin{itemize}
-						\item Graph query by example~\cite{mottin2014exemplar,jayaram2015querying}	
-						\item Learning paths~\cite{bonifati2014learning} 
-					\end{itemize}
-			\end{itemize}
-\stitle{Refinement of Graph Query Results}
-			\begin{itemize}
-				\item Reformulation and refinement:
-					\begin{itemize}
-						\item Graph Query Reformulation with diversity~\cite{mottin2015graph}
-						\item Why-empty and Why-so-many results~\cite{vasilyeva2016answering}
-						\item Result summarization~\cite{ranu2014answering,wu2013summarizing}
-					\end{itemize}
-				\item Top-k results: 
-					\begin{itemize}
-					 	\item Diversified Top-k Graph Pattern Matching~\cite{fan2013diversified}
-					 	\item Learning to rank from user-feedback~\cite{su2015exploiting}
-					 	\item Top-K interesting subgraph discovery in information networks~\cite{gupta2014top,jin2015querying}
-					 \end{itemize}
-				\item Skyline queries~\cite{zheng2014efficient,zou2010dynamic}  
-			\end{itemize}
-% 		\item \textbf{Focused Graph Mining} (35 min) 
+% \stitle{Refinement of Graph Query Results}
 % 			\begin{itemize}
-% 				\item Focused Graph clustering and outlier detection:
+% 				\item Reformulation and refinement:
 % 					\begin{itemize}
-% 						\item Focused clustering providing seed nodes~\cite{perozzi2014focused,iglesias2015efficient,kloumann2014community}
-% 						\item Query-driven outlier detection~\cite{gupta2014local,zhuang2014mining}
+% 						\item Graph Query Reformulation with diversity~\cite{mottin2015graph}
+% 						\item Why-empty and Why-so-many results~\cite{vasilyeva2016answering}
+% 						\item Result summarization~\cite{ranu2014answering,wu2013summarizing}
 % 					\end{itemize}
-% 				\item Space restriction methods: 
+% 				\item Top-k results: 
 % 					\begin{itemize}
-% 						\item Ego-networks~\cite{epasto2015ego} and local community detection~\cite{ruan2013efficient,staudt2014detecting}
-% 						\item Center-piece subgraphs~\cite{tong2006center}
-% 						\item Query-driven graph summarization~\cite{zhang2010discovery}
-% 					\end{itemize}
-% 				\item Reweighting graphs: WIGM~\cite{yang2012wigm}	
+% 					 	\item Diversified Top-k Graph Pattern Matching~\cite{fan2013diversified}
+% 					 	\item Learning to rank from user-feedback~\cite{su2015exploiting}
+% 					 	\item Top-K interesting subgraph discovery in information networks~\cite{gupta2014top,jin2015querying}
+% 					 \end{itemize}
+% 				\item Skyline queries~\cite{zheng2014efficient,zou2010dynamic}  
 % 			\end{itemize}
-% 	\end{enumerate}
-% 	\item \textbf{Real-world use case} (15 min) 
-% 		\begin{itemize}
-% 			\item Linked Data graphs: exploration, query refinement, and mining
-% 		\end{itemize}
-% 	\item \textbf{Open challenges} (20 min) 
-% 		\begin{itemize}%[label={\bf\arabic*.}]
-% 			% \item \textbf{Applications} {\small [to be excluded in a 1.5 hours tutorial]}
-% 			% 	\begin{itemize}
-% 			% 		\item Better recommendations for targeted advertising 
-% 			% 		\item Improved graph exploration tools
-% 			% 		\item Supporting mobile devices (limited screen space)
-% 			% 		\item Adaptive techniques for improved performance
-% 			% 	\end{itemize}
-% 			%\item \textbf{Open questions}
-% 			%	\begin{itemize}
-% 			\item Can we \emph{interactively} assist the user toward the retrieval of the correct answer?  
-% 			\item Can we provide \emph{explanations} for the query results? 
-% 			\item Is there a way to efficiently \emph{adapt} the analyses on-demand? 
-% 			\item Can we integrate these techniques into current \emph{graph databases}?
-% 			%	\end{itemize}
-% 		\end{itemize}
 
 
 
