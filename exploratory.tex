@@ -49,14 +49,20 @@ PANDA first materialize all isomorphic graphs, then groups them into connected c
 
 Graph exploration entails that a user provided query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
 For this reason query reformulation techniques that aim at modifying the query to lead the user to the intended result have been proposed~\citep{mottin2015graph,hurtado2008query}. 
-A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$, with $\ell$ being a labeling function on nodes and edges, is a query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. 
+A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is a query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. 
 Therefore, $Q'$ can be more specific or more generic than $Q$. 
 %For simplicity the graph is considered unlabeled, even though the presented methods work mostly with labeled graphs. 
 %the set of $\mathcal{R}(Q)=\{G' \subseteq G | G' \equiv Q \}$ with a
 
+Reformulation in graphs mostly involve collection on graphs or \emph{graph databases}.
+\dnote{DAVIDE: GQRef~\citep{mottin2015graph}, Why-not on graphs\cite{islam2015efficient}}
+
+
+
+Few works explicitly target large graphs.
 Early attempts in this direction propose to enrich the SPARQL semantics with a \textsc{RELAX} clause that returns a set of reformulations following some predefined rules (such as expanding edges with a specific label)~\citep{hurtado2008query}.
 
-%Few works explicitly target large graphs
+
 
 
 % Given a set of graphs $\mathcal{D} = \{G_1, ..., G_n\} and a query $Q:\langle$$N_Q,E_Q$$\rangle$ the results of the evaluation of $Q$ over the set $\mathcal{D}$, is the set $\results{Q}$ of subgraphs isomorphic to $Q$.
