@@ -3,7 +3,7 @@
 
 \stitle{Example-based approaches} 
 
-One of the earliest attempts to bring examples as a query method is query-by-example~\citep{zloof1975query}.
+\noindent One of the earliest attempts to bring examples as a query method is query-by-example~\citep{zloof1975query}.
 The main idea was to help the user in the query formulation, allowing her to specify the shape of the results in terms of templates for tuples, i.e., examples.
 Query-by-example has been lately revisited, and the use of examples have found application in graph data as well. 
 The definition of example has transformed from a mere template to the representative of the intended results the user would like to have.
@@ -19,7 +19,7 @@ Providing examples has also been used to detect communities~\citep{staudt2014det
 One approach is to consider each node in $v \in Q$ as the only representative of a community~\citep{staudt2014detecting}. 
 In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the 
 Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns cluster that better represent the seed nodes $Q$.
-In addition, FocusCO also returns outlier nodes that do not belong to any community identified so far.  
+In addition, FocusCO returns outliers that do not belong to any community identified so far.  
 
 % Last, graph summarization can exploit the information on the example nodes to preserve only the relevant information in the nodes~\cite{zhang2010discovery}. 
 % \dnote{Learning queries by example~\citep{bonifati2014learning}}
@@ -47,70 +47,71 @@ PANDA first materialize all isomorphic graphs, then groups them into connected c
 
 \stitle{Reformulation of Graph Queries}
 
-Graph exploration entails that a user provided query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
-For this reason query reformulation techniques that aim at modifying the query to lead the user to the intended result have been proposed~\citep{mottin2015graph,hurtado2008query}. 
-A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is a query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. 
+\noindent Graph exploration entails that a user provided query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
+For this reason query reformulation techniques aim at modifying the query to lead the user to the intended result~\citep{mottin2015graph,hurtado2008query,islam2015efficient}. 
+A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. 
+Queries for reformulation are usually subgraph isomorphism queries~\cite{lee2012depth}.  
 Therefore, $Q'$ can be more specific or more generic than $Q$. 
+Query reformulation has been proposed for collections of graphs, or \emph{graph databases}, as well as large graphs. 
 %For simplicity the graph is considered unlabeled, even though the presented methods work mostly with labeled graphs. 
 %the set of $\mathcal{R}(Q)=\{G' \subseteq G | G' \equiv Q \}$ with a
 
-Reformulation in graphs mostly involve collection on graphs or \emph{graph databases}.
-\dnote{DAVIDE: GQRef~\citep{mottin2015graph}, Why-not on graphs\cite{islam2015efficient}}
+\eetitle{Query reformulation in graph databases.}
+Query reformulation in graphs can apply to collection of graphs or \emph{graph databases} $\mathcal{D} = \{G_1, ..., G_n\}$, where each $G_i$ is a graph $G_i = (V_i, E_i, \ell_i)$. 
+In such graph databases, the query $Q$ returns a subset $\mathcal{R}(Q) \subseteq \mathcal{D}$ containing the structure $Q$. 
+
+Graph Query Reformulation (GQRef)~\citep{mottin2015graph} discovers query reformulations having small overlap and high coverage; thus ideally no result is missing from the reformulated queries, yet the reformulations have little redundancy. 
+The objective is to find a set $R$ of $k$ reformulations with high coverage and diversity (i.e., small overlap), therefore maximizing $f(R) = |\bigcup_{Q \in R}\mathcal{R}(Q)|+ \lambda\sum_{Q_1,Q_2 \in R}|\mathcal{R}(Q_1) \cup \mathcal{R}(Q_2)|$. 
+Maximizing $f$ is \NP-hard, but an approximate greedy solution can guarantee a $(1/2)$-approximation. 
+
+Alternatively, AutoG~\citep{yi2017autog} proposes a top-$k$ reformulation approach for visual autocompletion of queries. 
+AutoG returns the $k$ best relaxations according to a ranking function that favors a large number of results for each reformulation and large diversity. 
+Such ranking function (excluding normalization) is $u(R) = \alpha \sum_{Q \in R}|\mathcal{R}(Q)|/|\mathcal{D}| + (1-\alpha) \sum_{Q_1, Q_2 \in R} \mathsf{dist}(Q_1, Q_2)$, where  $\alpha \in [0,1]$ strikes a balance between coverage and distance $\mathsf{dist}$ among queries.
 
 
 
-Few works explicitly target large graphs.
+\eetitle{Query reformulation in large graphs.}
+Few works explicitly explore query reformulation large graphs.
 Early attempts in this direction propose to enrich the SPARQL semantics with a \textsc{RELAX} clause that returns a set of reformulations following some predefined rules (such as expanding edges with a specific label)~\citep{hurtado2008query}.
+In~\citep{arenas2014faceted} the SPARQL reformulations are extended to OWL logic, where the semantics of each reformulation is captured by the RDF taxonomy. 
+The user can interactively select or unselect among the possible expansion of a query such that the navigation is consistent with the rules. 
+
+Query reformulations are also used to debug queries and understand why the query returned too-many or too-few answers~\citep{vasilyeva2016answering}. 
+In order to explain the dependency between the number of results and the query~\citep{vasilyeva2016answering} first computes the \emph{maximum common subgraph} (MCS) among the graph $G$ and the query $Q$, and then use a \emph{differential graph} to profile the query by adding edges from the differential graph to the MCS. 
+The maximum common subgraph is the largest connected graph $G'$ that is subgraph of both $Q$ and $G$. 
+
+VIIQ~\cite{jayaram2015viiq} employs query logs to rank the possible reformulations of the query $Q$. 
+VIIQ's ranking function generates \emph{correlation paths} among the sequence of reformulation in the current query $Q$ and the sequences in the query log. 
+Among the candidate \emph{single} edges that can be added to $Q$ the ranking function proposes those that have a larger support in the query log. 
+
+\dnote{DAVIDE: Expand?}
+
+% * VIIQ: Large graph, Query log, active and passive mode of candidate edge generation, scoring function based on correlation paths in the sequence in the query log, and ranking using prefixes and postfixes in those paths. 
+
+\eetitle{Why-not queries in graphs.}
+Why-not queries additionally require the user to provide a set of missing answers from the results of $Q$, and the system proposes a new query $Q'$ returning those results and the fewer number of irrelevant results. 
+The only work in this direction is~\cite{islam2015efficient}. 
+In order to return the why-not queries, the maximum common subgraph (MCS) among the query $Q$ and the missing answers $\mathcal{D}^-$ is computed. The best query is found as $\argmin_Q'\in \mathcal{D}\Delta(Q',D^{-})$. 
 
 
 
 
-% Given a set of graphs $\mathcal{D} = \{G_1, ..., G_n\} and a query $Q:\langle$$N_Q,E_Q$$\rangle$ the results of the evaluation of $Q$ over the set $\mathcal{D}$, is the set $\results{Q}$ of subgraphs isomorphic to $Q$.
-% In order to retrieve relevant reformulations, the objective function sums two different contributions: the number of $\results{Q}$ captured by the candidate reformulations (\emph{coverage}), and the number of diverse results in each result set of the reformulated queries (\emph{diversification}).
-% The coverage is a function $cov$ that takes as input a set of reformulated queries $R$, and computes the number of results captured by $R$, that is, $cov(R) = |\bigcup_{Q \in R}\results{Q}|$.
-% The diversification is represented by a function $div$ that takes into account the number of elements that are in the result set of $Q_1$ and not in $Q_2$, namely $div(Q_1, Q_2) = |\results{Q_1} \cup \results{Q_2}| - |\results{Q_1}\cap \results{Q_2}|$.
-% %The function measures the advantage that we have in taking results with a small overlap, in this way the higher div is the smaller the amount of common results.
-% The final score of a set of reformulated queries is the linear combination of coverage and diversity
-% \vspace*{-6pt}
-% \[f(R) = cov(R) + \lambda\sum_{Q_1,Q_2 \in R}div(Q_1,Q_2)\]
-% \vspace*{-6pt}
-
-% \noindent where $\lambda \in [0,1]$ is a parameter that regulates the diversification of the result set $R$.
-% The set $R$ that maximizes the two factors of $f(R)$ is selected.
+%\dnote{WHERE? Why-not on graphs\citep{islam2015efficient}}
 
 
 
-% \eetitle{Empty-Answer:}
-% An empty-answer can be avoided with a more flexible or approximate query, as previously described, or with query reformulation. 
-% Unfortunately, the problem has received little attention and few approaches have been proposed. 
-
-% Empty-answer in RDF data is generally solved with rule based approaches~\cite{hurtado2008query}. 
-% This means that an empty-answer query is modified according to ad-hoc rules that take into consideration taxonomic information on ontologies. 
-% This diminishes the generality of the method and constrains the algorithm to RDF data. 
-% Moreover, the query modifications are treated equally irrespective of any user preference. 
-% A preliminary study of empty-answer queries in graphs has been recently proposed~\cite{vasilyeva2016answering}. 
-% That method is based on the idea of differential graphs, i.e., the largest subgraph of the query that produces answers. 
-% Despite of the intuitive definition, the method suffers of efficiency problems and lacks any user preference model.
+% Given query results, and additional missing graphs, how to find the minimal query as close as possible to Q efficiently. Use a distance among queries. 
 
 
-% \eetitle{Many-Answers:}
-% Faceted search on graphs has mainly been considered for RDF graphs and SPARQL queries~\cite{oren2006extending,arenas2014faceted,wagner2011browsing,ferre2011semantic}. 
-% The purpose is to propose a set of facets that represents groups of more specific queries.
-% Tree-based approaches~\cite{wagner2011browsing} similar to decision trees have been proposed with the purpose of implicitly minimizing user effort. 
-% However, apart from an unclear objective, these methods explore a large search space and disregard any user preference. 
-% Faceted search has been also used as a tool for query suggestion for exploratory search~\cite{ferre2011semantic}.
-% In~\cite{arenas2014faceted} the SPARQL reformulations are extended to OWL logic, where the semantics of each reformulation is captured by the RDF taxonomy.
-% %Recall that a reformulation in graph terms is a supergraph or a modification of the query. 
-% However, SPARQL approaches are mostly rule-based, since they generate facets based on some predefined expansion rule or grammar and therefore not suitable for any heterogeneous graph.
-% Moreover, the efficiency of these methods highly depends on the underlying database and query optimizer, and although rule based approaches can be fast in principle they do not scale to large graphs. 
+
+%% SKYLINE? Do we add this? 
+%\item Skyline queries~\cite{zheng2014efficient,zou2010dynamic}  
+
+
 
 
 % \eetitle{Missing-answers:}
-% The only known work that deals with missing answers proposes a why-not method for set of graphs~\cite{islam2015efficient}.
-% The approach is based on the maximum common subgraph that includes the results (i.e. the additional graphs) that the user would like to find. 
-% The main limitation is that they only consider set of graphs instead of heterogeneous networks and the method cannot easily apply to large graphs. 
 
-% \dnote{DAVIDE: Just a placeholder for the content.}
 
 
 
