@@ -32,8 +32,8 @@ The solution first computes the \emph{minimal answer graph} connecting the query
 
 \eetitle{Subgraphs as examples.}
 Subgraphs are more expressive than nodes and tuples, hence they can be exploited to obtain more accurate results. 
-In the case of graphs, the example can constitute an Exemplar Query~\citep{mottin2016exemplar}, thus $Q\subseteq G$ and a result is a subset of $G$ congruent to $Q$.
-Exemplar Queries is a flexible paradigm that allows the definition of multiple congruence relations among the input example and the intended results. 
+In the case of graphs, the example can constitute an Exemplar Query~\citep{mottin2016exemplar} $Q\subseteq G$ and a result is a subset of $G$ congruent to $Q$.
+Exemplar Queries is a flexible paradigm that allows the definition of multiple congruence relations among the input example and the intended results, such as isomorphism or strong simulation~\citep{ma2014strong}. 
 Moreover, it supports efficient retrieval of top-$k$ results. 
 
 A generalization of exemplar queries, PANDA~\citep{xie2017panda}, studies partial topology-based network search. 
@@ -46,30 +46,30 @@ PANDA first materialize all isomorphic graphs, then groups them into connected c
 
 \stitle{Reformulation of Graph Queries}
 
-\noindent Graph exploration requires a user to provide a query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
+\noindent Users with exploratory intent typically provide indefinite queries that are likely to return either too few or too-many results. 
 For this reason query reformulation techniques aim at modifying the query to lead the user to the intended result~\citep{mottin2015graph,hurtado2008query,islam2015efficient}. 
-A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. Therefore, $Q'$ can be more specific (supergraph) or more generic (subgraph) than $Q$. 
+A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph $Q' \subseteq Q$ or a subgraph $Q' \supseteq Q$ of $Q$. Therefore, $Q'$ can be more specific (supergraph) or more generic (subgraph) than $Q$. 
 Queries considered in graph query reformulation are usually subgraph isomorphism queries~\cite{lee2012depth}.  
-Query reformulation has been proposed for collections of graphs, or \emph{graph databases}, as well as large graphs. 
+Query reformulation has been proposed for collections of graphs, or \emph{graph databases}, as well as \emph{large graphs}. 
 %For simplicity the graph is considered unlabeled, even though the presented methods work mostly with labeled graphs. 
 %the set of $\mathcal{R}(Q)=\{G' \subseteq G | G' \equiv Q \}$ with a
 
 \eetitle{Query reformulation in graph databases.}
 Query reformulation in graphs can apply to collection of graphs or \emph{graph databases} $\mathcal{D} = \{G_1, ..., G_n\}$, where each $G_i$ is a graph $G_i = (V_i, E_i, \ell_i)$. 
-In such graph databases, the query $Q$ returns a subset $\mathcal{R}(Q) \subseteq \mathcal{D}$ containing the structure $Q$. 
+In such graph databases, the query $Q$ returns a subset of the collection $\mathcal{R}(Q) \subseteq \mathcal{D}$ containing the structure $Q$. 
 
 Graph Query Reformulation (GQRef)~\citep{mottin2015graph} discovers query reformulations having small overlap and high coverage; thus ideally no result is missing from the reformulated queries, yet the reformulations have little redundancy. 
-The objective is to find a set $R$ of $k$ reformulations with high coverage and diversity (i.e., small overlap), therefore maximizing $f(R) = |\bigcup_{Q \in R}\mathcal{R}(Q)|+ \lambda\sum_{Q_1,Q_2 \in R}|\mathcal{R}(Q_1) \cup \mathcal{R}(Q_2)|$. 
+The objective is to find a set $R$ of $k$ reformulations with high coverage and diversity (i.e., small overlap)  maximizing $f(R) = |\bigcup_{Q \in R}\mathcal{R}(Q)|+ \lambda\sum_{Q_1,Q_2 \in R}|\mathcal{R}(Q_1) \cup \mathcal{R}(Q_2)|$. 
 Maximizing $f$ is \NP-hard, but an approximate greedy solution can guarantee a $(1/2)$-approximation. 
 
 Alternatively, AutoG~\citep{yi2017autog} proposes a top-$k$ reformulation approach for visual autocompletion of queries. 
 AutoG returns the $k$ best relaxations according to a ranking function that favors a large number of results for each reformulation and large diversity. 
-Such ranking function (excluding normalization) is $u(R) = \alpha \sum_{Q \in R}|\mathcal{R}(Q)|/|\mathcal{D}| + (1-\alpha) \sum_{Q_1, Q_2 \in R} \mathsf{dist}(Q_1, Q_2)$, where  $\alpha \in [0,1]$ strikes a balance between coverage and distance $\mathsf{dist}$ among queries.
+Such ranking function (excluding normalization) is $u(R) = \alpha \sum_{Q \in R}|\mathcal{R}(Q)|/|\mathcal{D}| + (1-\alpha) \sum_{Q_1, Q_2 \in R} \mathsf{dist}(Q_1, Q_2)$, where  $\alpha \in [0,1]$ strikes a balance between coverage and a user-defined distance $\mathsf{dist}$ among queries.
 
 
 
 \eetitle{Query reformulation in large graphs.}
-Few works explicitly explore query reformulation large graphs.
+Few works explicitly explore query reformulation in large graphs.
 Early attempts in this direction propose to enrich the SPARQL semantics with a \textsc{RELAX} clause that returns a set of reformulations following some predefined rules (such as expanding edges with a specific label)~\citep{hurtado2008query}.
 In~\citep{arenas2014faceted} the SPARQL reformulations are extended to OWL logic, where the semantics of each reformulation is captured by the RDF taxonomy. 
 The user can interactively accept or reject the possible expansions of a query such that the navigation is consistent with the rules. 
@@ -79,7 +79,7 @@ In order to explain the dependency between the number of results and the query~\
 The maximum common subgraph is the largest connected graph $G'$ that is subgraph of both $Q$ and $G$. 
 
 VIIQ~\cite{jayaram2015viiq} employs query logs to rank the possible reformulations of the query $Q$. 
-VIIQ's ranking function generates \emph{correlation paths} among the sequence of reformulation in the current query $Q$ and the sequences in the query log. 
+VIIQ's ranking function generates \emph{correlation paths} among the sequence of reformulations in the current query $Q$ and the sequences in the query log. 
 Among the candidate \emph{single} edges that can be added to $Q$ the ranking function proposes those that have a larger support in the query log. 
 
 %\dnote{DAVIDE: Expand?}
