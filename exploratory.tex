@@ -3,7 +3,7 @@
 
 \stitle{Example-based approaches} 
 
-\noindent One of the earliest attempts to bring examples as a query method is query-by-example~\citep{zloof1975query}.
+\noindent One of the earliest attempts employing examples as search conditions is query-by-example~\citep{zloof1975query}.
 The main idea was to help the user in the query formulation, allowing her to specify the shape of the results in terms of templates for tuples, i.e., examples.
 Query-by-example has been lately revisited, and the use of examples have found application in graph data. 
 The definition of example has transformed from a mere template to the representative of the intended results the user would like to retrieve.
@@ -13,11 +13,11 @@ The definition of example has transformed from a mere template to the representa
 Discrepancy maximization in graphs~\citep{gionis2015bump} aims at finding a connected subgraph $G' = (V', E'), G' \subseteq G$ that maximizes the discrepancy $\delta(G'){=}\alpha|Q|{-}|V{\setminus}Q|, \alpha > 1$; in other words, $G'$ is a subgraph containing more nodes from $Q$ than other nodes. 
 Discrepancy maximization is \NP-hard. 
 On a similar line, the Center-piece subgraph problem (CEPS)~\citep{tong2006center} finds the maximum weight subgraph that contains at least $k$ query nodes and at most $b$ other nodes. 
-A generalization of the CEPS problem, the minimum Wiener connector problem (MWC)~\citep{ruchansky2015minimum} computes dense regions of a graph potentially representing community structures, given a set of nodes as input. MWC aims at finding a subgraph of $G$ induced by $Q$, denoted as $G[Q]$, that minimizes the sum of the pairwise distances among the nodes in $Q$, i.e, $\argmin_{G[Q]}\sum_{\{u,v\}{}\in{}Q}{}d_{G[Q]}(u,v)$. 
+A generalization of the CEPS problem, the minimum Wiener connector problem (MWC)~\citep{ruchansky2015minimum} computes dense regions of a graph potentially representing community structures, given a set of nodes as input. MWC aims at finding a subgraph of $G$ induced by $Q$, denoted as $G[Q]$, that minimizes the sum of the pairwise distances among the nodes in $Q$, i.e, $\argmin_{G[Q]}\sum_{\{u,v\}{\in}Q}{}d_{G[Q]}(u,v)$. 
 
-Providing examples has also been used to detect communities~\citep{staudt2014detecting,perozzi2014focused}, where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
+Examples have also been used as a mean to detect communities~\citep{staudt2014detecting,perozzi2014focused}, where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
 One approach is to consider each node in $v \in Q$ as a representative of a different community~\citep{staudt2014detecting}. 
-In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the 
+In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the examples.
 Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns cluster that better represent the seed nodes $Q$.
 In addition, FocusCO returns outliers that do not belong to any community identified so far.  
 
@@ -46,7 +46,7 @@ PANDA first materialize all isomorphic graphs, then groups them into connected c
 
 \stitle{Reformulation of Graph Queries}
 
-\noindent Graph exploration entails that a user provided query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
+\noindent Graph exploration requires a user to provide a query on a graph is indefinite in nature, and therefore is likely to return either too few or too-many results. 
 For this reason query reformulation techniques aim at modifying the query to lead the user to the intended result~\citep{mottin2015graph,hurtado2008query,islam2015efficient}. 
 A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph or a subgraph of $Q$, $Q' \subseteq Q$ or $Q' \supseteq Q$. Therefore, $Q'$ can be more specific (supergraph) or more generic (subgraph) than $Q$. 
 Queries considered in graph query reformulation are usually subgraph isomorphism queries~\cite{lee2012depth}.  
