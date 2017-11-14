@@ -1,7 +1,7 @@
 %!TEX root=./paper.tex
 \subsection{Exploratory Graph Analysis} 
 
-\stitle{Example-based approaches} 
+% \stitle{Example-based approaches} 
 
 \noindent One of the earliest attempts employing examples as search conditions is query-by-example~\citep{zloof1975query}.
 The main idea was to help the user in the query formulation, allowing her to specify the shape of the results in terms of templates for tuples, i.e., examples.
@@ -16,9 +16,9 @@ On a similar line, the Center-piece subgraph problem (CEPS)~\citep{tong2006cente
 A generalization of the CEPS problem, the minimum Wiener connector problem (MWC)~\citep{ruchansky2015minimum} computes dense regions of a graph potentially representing community structures, given a set of nodes as input. MWC aims at finding a subgraph of $G$ induced by $Q$, denoted as $G[Q]$, that minimizes the sum of the pairwise distances among the nodes in $Q$, i.e, $\argmin_{G[Q]}\sum_{\{u,v\}{\in}Q}{}d_{G[Q]}(u,v)$. 
 
 Examples have also been used as a mean to detect communities~\citep{staudt2014detecting,perozzi2014focused}, where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
-One approach is to consider each node in $v \in Q$ as a representative of a different community~\citep{staudt2014detecting}. 
+One approach is to consider each node $v \in Q$ as a representative of a different community~\citep{staudt2014detecting}. 
 In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the examples.
-Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns cluster that better represent the seed nodes $Q$.
+Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns clusters that better represent the seed nodes $Q$.
 In addition, FocusCO returns outliers that do not belong to any community identified so far.  
 
 % Last, graph summarization can exploit the information on the example nodes to preserve only the relevant information in the nodes~\cite{zhang2010discovery}. 
@@ -28,7 +28,7 @@ In addition, FocusCO returns outliers that do not belong to any community identi
 \eetitle{Node tuples as examples.}
 In Graph Query by Example (GQBE)~\citep{jayaram2015querying} a tuple of nodes $(v_1, ..., v_n), v_i \in V^n$ is a representative of the result tuples. 
 For instance, if the pair (\emph{Yahoo, Jerry Yang}) is provided, the result is expectedly other \emph{IT company, founder} pairs. 
-The solution first computes the \emph{minimal answer graph} connecting the query nodes and then finds other subgraphs isomorphic to the answer graph. 
+The solution first computes the \emph{minimal answer graph} connecting the query nodes and then finds other subgraphs isomorphic to such graph. 
 
 \eetitle{Subgraphs as examples.}
 Subgraphs are more expressive than nodes and tuples, hence they can be exploited to obtain more accurate results. 
@@ -44,12 +44,12 @@ PANDA first materialize all isomorphic graphs, then groups them into connected c
 %\dnote{DAVIDE: Maybe to expand a bit more.}
 
 
-\stitle{Reformulation of Graph Queries}
+\subsection{Reformulation of Graph Queries}
 
 \noindent Users with exploratory intent typically provide indefinite queries that are likely to return either too few or too-many results. 
 For this reason query reformulation techniques aim at modifying the query to lead the user to the intended result~\citep{mottin2015graph,hurtado2008query,islam2015efficient}. 
-A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph $Q' \subseteq Q$ or a subgraph $Q' \supseteq Q$ of $Q$. Therefore, $Q'$ can be more specific (supergraph) or more generic (subgraph) than $Q$. 
-Queries considered in graph query reformulation are usually subgraph isomorphism queries~\cite{lee2012depth}.  
+A \emph{reformulation} for a query $Q \subseteq G$ on a labeled graph $G = (V, E, \ell)$ with labeling function on nodes and edges $\ell$, is another query $Q'$ that is either a supergraph $Q' \supseteq Q$ or a subgraph $Q' \subseteq Q$ of $Q$. Therefore, $Q'$ can be more specific (supergraph) or more generic (subgraph) than $Q$. 
+Queries considered in graph query reformulation are usually subgraph isomorphism queries~\citep{lee2012depth}.  
 Query reformulation has been proposed for collections of graphs, or \emph{graph databases}, as well as \emph{large graphs}. 
 %For simplicity the graph is considered unlabeled, even though the presented methods work mostly with labeled graphs. 
 %the set of $\mathcal{R}(Q)=\{G' \subseteq G | G' \equiv Q \}$ with a
@@ -59,7 +59,7 @@ Query reformulation in graphs can apply to collection of graphs or \emph{graph d
 In such graph databases, the query $Q$ returns a subset of the collection $\mathcal{R}(Q) \subseteq \mathcal{D}$ containing the structure $Q$. 
 
 Graph Query Reformulation (GQRef)~\citep{mottin2015graph} discovers query reformulations having small overlap and high coverage; thus ideally no result is missing from the reformulated queries, yet the reformulations have little redundancy. 
-The objective is to find a set $R$ of $k$ reformulations with high coverage and diversity (i.e., small overlap)  maximizing $f(R) = |\bigcup_{Q \in R}\mathcal{R}(Q)|+ \lambda\sum_{Q_1,Q_2 \in R}|\mathcal{R}(Q_1) \cup \mathcal{R}(Q_2)|$. 
+The objective is to find a set $R$ of $k$ reformulations with high coverage and diversity (i.e., small overlap)  maximizing $f(R) = |\bigcup_{Q \in R}\mathcal{R}(Q)|+ \lambda\sum_{Q_1,Q_2 \in R}|\mathcal{R}(Q_1) \cup \mathcal{R}(Q_2)|$, with $\lambda$ trading-off coverage and diversity. 
 Maximizing $f$ is \NP-hard, but an approximate greedy solution can guarantee a $(1/2)$-approximation. 
 
 Alternatively, AutoG~\citep{yi2017autog} proposes a top-$k$ reformulation approach for visual autocompletion of queries. 
@@ -74,7 +74,7 @@ Early attempts in this direction propose to enrich the SPARQL semantics with a \
 In~\citep{arenas2014faceted} the SPARQL reformulations are extended to OWL logic, where the semantics of each reformulation is captured by the RDF taxonomy. 
 The user can interactively accept or reject the possible expansions of a query such that the navigation is consistent with the rules. 
 
-Query reformulations are also used to debug queries and understand why the query returned too-many or too-few answers~\citep{vasilyeva2016answering}. 
+Query reformulation is also employed in query debugging to understand why the query returned too-many or too-few answers~\citep{vasilyeva2016answering}. 
 In order to explain the dependency between the number of results and the query~\citep{vasilyeva2016answering} first computes the \emph{maximum common subgraph} (MCS) among the graph $G$ and the query $Q$, and then use a \emph{differential graph} to profile the query by adding edges from the differential graph to the MCS. 
 The maximum common subgraph is the largest connected graph $G'$ that is subgraph of both $Q$ and $G$. 
 
