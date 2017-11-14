@@ -45,8 +45,8 @@
 \newcommand{\dist}{\kw{dist}}
 \newcommand{\len}{\kw{len}}
 \newcommand{\kw}[1]{{\ensuremath {\mathsf{#1}}}}
-\newcommand{\MST}{\kw{MST}}
-\newcommand{\kws}{\kw{KWS}}
+\newcommand{\MST}{\kw{MST}\xspace}
+\newcommand{\kws}{\kw{KWS}\xspace}
 \newcommand{\eg}{\emph{e.g.,}\xspace}
 \newcommand{\dnote}[1]{{\color{red}#1}}
 
@@ -218,7 +218,40 @@ without match in $Q$.
 
 \section{Key Applications}
 
+The need of graph exploratory is evident in user-friendly 
+knowledge exploration~\citep{achiezra2010exploratory},  
+ ``why-not'' query processing~\citep{tran2010conquer}, and database security, where highly-correlated 
+queries are identified to reverse-engineering 
+the sensitive entity information~\citep{tran2014query}.
+Another application is interactive sensemaking of complex graph data~\citep{pienta2015scalable}, with broader applications in 
+literature search and collaboration recommendation 
+in academic networks, attack and anomaly detection  
+in cyber networks, and event detection in social media. 
+
 \section{Future Directions} 
+
+The challenges remain open for interactive graph 
+exploration. Real-time interactivity is 
+crucial to exploration over large graphs. 
+This requires scalable graph analytics and 
+query suggestion, both are nontrivial for 
+graph data. One direction can be to 
+integrate emerging scalable graph mining 
+and learning methods
+to graph exploration tasks, beyond query-based 
+exploration. Uncertainty and trustworthiness of 
+graph data sources is another challenge 
+for exploration tasks, especially for 
+knowledge bases. This requires 
+truth-aware exploration that guarantees 
+the correctness of retrieved information. 
+A third direction is to combine 
+usable user interfaces and 
+scalable graph visualization 
+techniques to facilitate 
+sensemaking and knowledge discovery 
+by graph exploration.  
+
 
 
 
