@@ -78,11 +78,13 @@ Yinghui Wu\at Washington State University, \email{yinghui@eecs.wsu.edu}}
 
 \section{Definition}
 
-Exploratory methods have been originally introduced as a mean to extract knowledge from relational data without knowing what to search~\citep{idreos2015overview}. 
-Recently, \emph{graph exploration} has been introduced to perform exploratory analyses on graph-shaped data~\citep{mottin2017graph}. 
+Exploratory methods have been introduced as a mean to extract knowledge from relational data without knowing what to search~\citep{idreos2015overview}. 
+\emph{Graph exploration} has been introduced to perform exploratory analyses on graph-shaped data~\citep{mottin2017graph}. 
 Graph exploration aims at mitigating the access to the data to the user, even if such user is a novice. 
 
-Algorithms for graph exploration assume the user is not able to completely specify the object of interest with  a structured query, like a SPARQL~\citep{prud2006sparql} query, but rather expresses the need with a simpler, more ambiguous language.
+Algorithms for graph exploration assume the user is not able to completely specify the object of interest with  a structured query  like a SPARQL %~\citep{prud2006sparql} query, 
+(see Chapter ``Graph Query Languages''), 
+but rather expresses the need with a simpler, more ambiguous language.
 
 This asymmetry between the rigidity of structured queries and ambiguity of the user has inspired the study of approximate, flexible, and example-based methods. 
 
@@ -122,16 +124,15 @@ on disambiguation and keyword query refinement.
 \subsection{Graph Search with Keywords} 
 
 Keyword search (\kws) has been routinely used to 
-explore and understand graph data~\citep{wang2010survey,bao2015exploratory,yahya2016exploratory,mottin2017graph}. 
+explore graph data~\citep{wang2010survey,mottin2017graph}. 
 (1) A keyword query $Q$ is a set of terms $\{t_1, ..., t_n\}$. 
 Given graph $G$=$(V, E)$ and a term $t_i$, a match function 
 determines a set of {\em content nodes} $V(t_i)\subseteq V$ that match $t_i$. 
 (2) An answer 
-$G_Q$ of a keyword query $Q$ is a subgraph of $G$ that contains at least 
-one node from $V(t_i)$ for each $t_i\in Q$. 
-In keyword-based graph exploration, 
-a function $F(G_Q)$ is used to quantify the 
-cost of connecting all content nodes in $G$. 
+$G_Q$ of a keyword query $Q$ is a subgraph of $G$ that contains
+a node from $V(t_i)$ for each $t_i\in Q$. 
+A function $F(G_Q)$ is used to quantify the 
+cost of connecting all content nodes. 
 Answers with smaller cost have higher quality. 
 
 Given a node pair $(u, v)$ 
@@ -143,8 +144,8 @@ the shortest path from $u$ to $v$.
 There are three common classes of \kws queries. 
 
 \vspace{.5ex}
-\etitle{Distinct root-based KWS}~\citep{kacholia2005bidirectional,he2007blinks}. 
-These query defines $G_Q$ as a minimal rooted tree 
+\etitle{Distinct root-based KWS} %~\citep{kacholia2005bidirectional,he2007blinks}. 
+defines $G_Q$ as a minimal rooted tree 
 which (1) contains a distinct root node $v_r$, and 
 at least a content node $v_i\in V(t_i)$ as a leaf for each $t_i\in Q$; 
 and (2) $\len(v_r, v_i)\leq r$ for a predefined hop bound $r$, 
@@ -153,27 +154,25 @@ no subtree of $G_Q$ is an answer of $Q$ in $G$.
 The function $F(G_Q)$ is defined as 
 $F(G_Q) = \sum_{t_i\in Q}\dist(v_r, v_i)$, 
 where $v_i$ ranges over the content nodes. 
-
 The answers of such queries can be found in  
 $O(|Q|(|V|\log|V|+|E|))$ time (cf.~\citep{yu2010keyword}). 
 
 \etitle{Steiner tree-based KWS}~\citep{bhalotia2002keyword}. 
-A Steiner tree-based query differs 
+differs 
 from its distinct root-based counterparts 
 in that it uses a different cost function $F(G_Q)$, which is defined as 
 $\sum_{e\in G_Q} w(e)$, 
 \ie the total weight of the edges in the Steiner tree $G_Q$. 
-
 %%%%%%%%%
 It is \NP-hard~\citep{yu2010keyword} to evaluate a Steiner tree-based query  
-by computing a minimum weighted Steiner tree (\MST, a known \NP-hard problem~\citep{ding2007finding}). 
+by computing a minimum weighted Steiner tree, a known \NP-hard problem~\citep{ding2007finding}. 
 Both exact~\citep{ding2007finding} and 
 approximation algorithms~\citep{byrka2013steiner} 
 have been developed to evaluate such queries. 
 
 \vspace{.5ex}
-\etitle{Steiner graph-based KWS}~\citep{li2008ease,kargar2011keyword}. 
-Finding $G_Q$ as graphs rather than trees may be more helpful. For Steiner graph-based queries with a number $r$,  
+\etitle{Steiner graph-based KWS}~\citep{li2008ease,kargar2011keyword} 
+finds $G_Q$ as graphs rather than trees. For Steiner graph-based queries with a number $r$,  
 $G_Q$ is a Steiner graph that contains content and Steiner nodes (\ie nodes 
 on shortest paths between two content nodes), with either radius bounded by $r$ 
 (\ie r-radius Steiner graph~\citep{li2008ease}), or distance between 
@@ -183,22 +182,19 @@ is computed as
 $\sum_{i\in[1, n]}\sum_{j\in[i+1,n]}\dist(v_i, v_j)$, 
 \ie the total pairwise distances of the 
 content nodes in $G_Q$. 
-Here, the distances are typically 
-induced by undirected shortest paths.  
-
 It is in general \NP-hard 
-to evaluate Steiner graph-based queries~\citep{yu2010keyword, kargar2011keyword}. 
+to evaluate Steiner graph-based queries~\citep{yu2010keyword}. 
 Approximate algorithms are developed for such queries to 
 find $r$-radius graphs~\citep{li2008ease}
 and $r$-cliques~\citep{kargar2011keyword}. 
 
 \stitle{Keyword query suggestion}. 
 Keyword query suggestion and its variants 
-(\eg query refinement~\cite{mishra2009interactive} and reformulation~\citep{yao2012keyword}) 
+(\eg query refinement and reformulation) 
 have been studied to suggest new queries that better describe search intent 
 for graph exploration. 
 Most prior work adopts information retrieval techniques that make use of 
-query logs and user feedback~\citep{carpineto2012survey,cao2008context}.
+query logs and user feedback~\citep{carpineto2012survey}.
 Keyword query suggestion for graphs has been studied in ~\citep{tran2009top} by suggesting structured queries computed from the keywords over RDF data. In order to summarize the results of \kws over structured data, tag clouds~\citep{koutrika2009data} discovers the most significant words retrieved as a part of the initial results. 
 Provable quality guarantees of the answers are not addressed in these work. 
 
@@ -252,7 +248,15 @@ techniques to facilitate
 sensemaking and knowledge discovery 
 by graph exploration.  
 
+\section{Cross-References}
 
+\begin{itemize}
+\item Graph pattern matching
+\item Graph query languages
+\item Community analytics in graphs
+\item Graph query processing
+\item Visual graph querying
+\end{itemize}
 
 
 %This document is intended as a template and guide for the preparation of articles to an encyclopedia, using latex. Contributions should in general follow the usual scheme, "Synonyms, Definitions, Main text (split into various sections with heads and subheads chosen by authors), Conclusions, Cross-references and References", although circumstances might indicate a deviation from this. 

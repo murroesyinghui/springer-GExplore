@@ -15,11 +15,14 @@ Discrepancy maximization is \NP-hard.
 On a similar line, the Center-piece subgraph problem (CEPS)~\citep{tong2006center} finds the maximum weight subgraph that contains at least $k$ query nodes and at most $b$ other nodes. 
 A generalization of the CEPS problem, the minimum Wiener connector problem (MWC)~\citep{ruchansky2015minimum} computes dense regions of a graph potentially representing community structures, given a set of nodes as input. MWC aims at finding a subgraph of $G$ induced by $Q$, denoted as $G[Q]$, that minimizes the sum of the pairwise distances among the nodes in $Q$, i.e, $\argmin_{G[Q]}\sum_{\{u,v\}{\in}Q}{}d_{G[Q]}(u,v)$. 
 
-Examples have also been used as a mean to detect communities~\citep{staudt2014detecting,perozzi2014focused}, where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
+Examples have also been used as a mean to detect communities, 
+%~\citep{staudt2014detecting,perozzi2014focused}, 
+where a community is a set of nodes, in which every node is connected to many more nodes inside the community than outside. 
 One approach is to consider each node $v \in Q$ as a representative of a different community~\citep{staudt2014detecting}. 
 In graphs with attributes on nodes, FocusCO~\citep{perozzi2014focused} introduced a clustering algorithm that learns a similarity function among nodes, based on the attributes in the examples.
 Formally, FocusCO takes an attributed graph $G = (V,E,F)$, where $F$ is a feature matrix $F \in \mathbb{R}^n\times f$ and $F_{i\cdot}$ represents the attribute vector for node $v_i$, and returns clusters that better represent the seed nodes $Q$.
-In addition, FocusCO returns outliers that do not belong to any community identified so far.  
+FocusCO returns outliers that do not belong to any community identified so far. 
+(For community detection, see Chapter ``Community Analytics in Graphs'').  
 
 % Last, graph summarization can exploit the information on the example nodes to preserve only the relevant information in the nodes~\cite{zhang2010discovery}. 
 % \dnote{Learning queries by example~\citep{bonifati2014learning}}
@@ -39,6 +42,9 @@ Moreover, it supports efficient retrieval of top-$k$ results.
 A generalization of exemplar queries, PANDA~\citep{xie2017panda}, studies partial topology-based network search. 
 That is, to find the connections (paths) between structures node-label isomorphic to different user inputs. 
 PANDA first materialize all isomorphic graphs, then groups them into connected components, and finally finds undirected shortest paths among them. 
+More techniques on graph pattern queries are introduced 
+in Chapter ``Graph pattern matching'' and 
+``Graph query processing''.
 
 
 %\dnote{DAVIDE: Maybe to expand a bit more.}
@@ -64,7 +70,8 @@ Maximizing $f$ is \NP-hard, but an approximate greedy solution can guarantee a $
 
 Alternatively, AutoG~\citep{yi2017autog} proposes a top-$k$ reformulation approach for visual autocompletion of queries. 
 AutoG returns the $k$ best relaxations according to a ranking function that favors a large number of results for each reformulation and large diversity. 
-Such ranking function (excluding normalization) is $u(R) = \alpha \sum_{Q \in R}|\mathcal{R}(Q)|/|\mathcal{D}| + (1-\alpha) \sum_{Q_1, Q_2 \in R} \mathsf{dist}(Q_1, Q_2)$, where  $\alpha \in [0,1]$ strikes a balance between coverage and a user-defined distance $\mathsf{dist}$ among queries.
+Such ranking function (excluding normalization) is $u(R) = \alpha \sum_{Q \in R}|\mathcal{R}(Q)|/|\mathcal{D}| + (1-\alpha) \sum_{Q_1, Q_2 \in R} \mathsf{dist}(Q_1, Q_2)$, where  $\alpha \in [0,1]$ strikes a balance between coverage and a user-defined distance $\mathsf{dist}$ among queries. For visual query analysis, 
+see Chapter ``Visual Graph Querying''. 
 
 
 
