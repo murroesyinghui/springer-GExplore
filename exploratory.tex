@@ -9,7 +9,7 @@ Query-by-example has been lately revisited, and the use of examples have found a
 The definition of example has transformed from a mere template to the representative of the intended results the user would like to retrieve.
 \emph{Examples} for a graph $G = (V,E)$ can be either \emph{set of nodes} $Q \subseteq V$, \emph{tuple} of nodes $(v_1, ..., v_n) \in V^n$, or \emph{subgraphs} $Q \subseteq G$, where with an abuse of notation $\subseteq$ indicates both set and structural inclusion. 
 
-\eetitle{Set of nodes as examples.} Several analyses can be performed when a set of examples nodes $Q\subseteq V$ is provided; this includes the discovery of dense graph regions~\citep{gionis2015bump,ruchansky2015minimum}, central nodes~\citep{tong2006center}, and communities~\citep{staudt2014detecting,perozzi2014focused}.%, and targeted graph summarization~\citep{zhang2010discovery}. 
+\eetitle{Set of nodes as examples.} Several analyses can be performed when a set of example nodes $Q\subseteq V$ is provided; this includes the discovery of dense graph regions~\citep{gionis2015bump,ruchansky2015minimum}, central nodes~\citep{tong2006center}, and communities~\citep{staudt2014detecting,perozzi2014focused}.%, and targeted graph summarization~\citep{zhang2010discovery}. 
 Discrepancy maximization in graphs~\citep{gionis2015bump} aims at finding a connected subgraph $G' = (V', E'), G' \subseteq G$ that maximizes the discrepancy $\delta(G'){=}\alpha|Q|{-}|V{\setminus}Q|, \alpha > 1$; in other words, $G'$ is a subgraph containing more nodes from $Q$ than other nodes. 
 Discrepancy maximization is \NP-hard. 
 On a similar line, the Center-piece subgraph problem (CEPS)~\citep{tong2006center} finds the maximum weight subgraph that contains at least $k$ query nodes and at most $b$ other nodes. 
@@ -40,8 +40,8 @@ Exemplar Queries is a flexible paradigm that allows the definition of multiple c
 Moreover, it supports efficient retrieval of top-$k$ results. 
 
 A generalization of exemplar queries, PANDA~\citep{xie2017panda}, studies partial topology-based network search. 
-That is, to find the connections (paths) between structures node-label isomorphic to different user inputs. 
-PANDA first materialize all isomorphic graphs, then groups them into connected components, and finally finds undirected shortest paths among them. 
+That is, finding the connections (paths) between structures node-label isomorphic to different user inputs. 
+PANDA first materializes all isomorphic graphs, then groups them into connected components, and finally finds undirected shortest paths among them. 
 More techniques on graph pattern queries are introduced 
 in Chapter ``Graph pattern matching'' and 
 ``Graph query processing''.
@@ -82,7 +82,7 @@ In~\citep{arenas2014faceted} the SPARQL reformulations are extended to OWL logic
 The user can interactively accept or reject the possible expansions of a query such that the navigation is consistent with the rules. 
 
 Query reformulation is also employed in query debugging to understand why the query returned too-many or too-few answers~\citep{vasilyeva2016answering}. 
-In order to explain the dependency between the number of results and the query~\citep{vasilyeva2016answering} first computes the \emph{maximum common subgraph} (MCS) among the graph $G$ and the query $Q$, and then use a \emph{differential graph} to profile the query by adding edges from the differential graph to the MCS. 
+In order to explain the dependency between the number of results and the query~\citep{vasilyeva2016answering} first computes the \emph{maximum common subgraph} (MCS) among the graph $G$ and the query $Q$, and then uses a \emph{differential graph} to profile the query by adding edges from the differential graph to the MCS. 
 The maximum common subgraph is the largest connected graph $G'$ that is subgraph of both $Q$ and $G$. 
 
 VIIQ~\cite{jayaram2015viiq} employs query logs to rank the possible reformulations of the query $Q$. 
@@ -94,9 +94,9 @@ Among the candidate \emph{single} edges that can be added to $Q$ the ranking fun
 % * VIIQ: Large graph, Query log, active and passive mode of candidate edge generation, scoring function based on correlation paths in the sequence in the query log, and ranking using prefixes and postfixes in those paths. 
 
 \eetitle{Why-not queries in graphs.}
-Why-not queries additionally require the user to provide a set of missing answers from the results of $Q$, and the system proposes a new query $Q'$ returning those results and the fewer number of irrelevant results. 
+Why-not queries additionally require the user to provide a set of missing answers from the results of $Q$, and the system proposes a new query $Q'$ returning those results and the least number of irrelevant results. 
 The only work in this direction is~\cite{islam2015efficient}. 
-In order to return the why-not queries, the maximum common subgraph (MCS) among the query $Q$ and the missing answers $\mathcal{D}^-$ is computed. The best query is found minimizing the maximum distance among $Q'$ and the missing answers $\mathcal{D}^-$ as $\argmin_{Q'\in \mathcal{D}} \max\{\Delta(Q',G)|G \in D^{-}\})$, where given $G_1 = (E_1,V_1, \ell_1), G_2 = (E_2,V_2, \ell_2)$, $\Delta(G_1, G_2) = |E_1| + |E_2| - 2 |\mathsf{MCS}(G_1,G_2)|$. 
+In order to compute why-not queries, the maximum common subgraph (MCS) among the query $Q$ and the missing answers $\mathcal{D}^-$ is computed. The best query is found minimizing the maximum distance among $Q'$ and the missing answers $\mathcal{D}^-$ as $\argmin_{Q'\in \mathcal{D}} \max\{\Delta(Q',G)|G \in D^{-}\})$, where given $G_1 = (E_1,V_1, \ell_1), G_2 = (E_2,V_2, \ell_2)$, $\Delta(G_1, G_2) = |E_1| + |E_2| - 2 |\mathsf{MCS}(G_1,G_2)|$. 
 
 
 %% SKYLINE? Do we add this? 
